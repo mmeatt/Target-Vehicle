@@ -113,11 +113,77 @@ static void Auto_control(void)
             }
             default:break;
         }
+        switch(chassis.vehicle_direction)
+        {
+            case MOVE_CLOSE_DIR:{
+                auto_move_speed = -1 * auto_move_speed;
+                break;
+            }
+            case MOVE_FAR_DIR:{
+                break;
+            }
+        }
         switch (chassis.vehicle_pos_status)
         {
-            case CLOSE_BREAK_ZONE:{}
-            case FAR_BREAK_ZONE:{}
-            case MIDDLE_ZONE:{}
+            case CLOSE_BREAK_ZONE:{
+                if(chassis.vehicle_direction == MOVE_CLOSE_DIR)
+                {
+                    ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_STOP_INPUT,auto_move_speed,0.0f);
+                    chassis.move_speed = chassis_x_ramp.out;
+                    if(chassis.move_speed == 0.0f)
+                    {
+                        chassis.vehicle_direction = MOVE_FAR_DIR;
+                    }
+                }
+                else
+                {
+                    ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_START_INPUT,auto_move_speed,0);
+                    chassis.move_speed = chassis_x_ramp.out;
+                }
+            }
+            case FAR_BREAK_ZONE:{
+                if(chassis.vehicle_direction == MOVE_FAR_DIR)
+                {
+                    ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_STOP_INPUT,0.0f,auto_move_speed);
+                    chassis.move_speed = chassis_x_ramp.out;
+                    if(chassis.move_speed == 0.0f)
+                    {
+                        chassis.vehicle_direction = MOVE_CLOSE_DIR;
+                    }
+                }
+                else
+                {
+                    ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,-auto_move_speed);
+                    chassis.move_speed = chassis_x_ramp.out;
+                }
+            }
+            case MIDDLE_ZONE:{
+                switch(chassis.vehicle_direction)
+                {
+                    case MOVE_FAR_DIR:{
+                        if(chassis.move_speed < auto_move_speed)
+                        {
+                             ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_START_INPUT,auto_move_speed,0);
+                             chassis.move_speed = chassis_x_ramp.out;
+                        }
+                        else
+                        {
+                            chassis.move_speed = auto_move_speed;
+                        }
+                    }
+                    case MOVE_CLOSE_DIR:{
+                        if(chassis.move_speed > -auto_move_speed)
+                        {
+                             ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,-auto_move_speed);
+                             chassis.move_speed = chassis_x_ramp.out;
+                        }
+                        else
+                        {
+                            chassis.move_speed = -auto_move_speed;
+                        }
+                    }
+                }
+            }
             case CLOSE_START_ZONE:{}
             case FAR_START_ZONE:{}
             default:break;

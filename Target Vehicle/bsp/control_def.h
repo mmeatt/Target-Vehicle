@@ -11,6 +11,9 @@
 #define MOVE_SPEED_LIMIT           1000
 #define CALIBRATION_MOVE_SPEED     100
 
+#define VEHICLE_START_INPUT        100
+#define VEHICLE_STOP_INPUT        -200
+
 #define MOVE_SPEED_LEVEL1          0
 #define MOVE_SPEED_LEVEL2          0
 #define MOVE_SPEED_LEVEL3          0

@@ -10,9 +10,9 @@
 
 typedef enum
 {
-    PROTECT_MODE,
-    CTRL_MODE,
-    AUTO_MODE
+    PROTECT_MODE,       //底盘保护模式
+    CTRL_MODE,          //底盘手动控制模式
+    AUTO_MODE           //底盘自动移动模式
 }chassis_mode_e;
 
 typedef struct
@@ -49,30 +49,30 @@ typedef struct
 
 typedef enum
 {
-    CHASSIS_UNINIT = 0,
-    CHASSIS_INIT
+    CHASSIS_UNINIT = 0,     //车辆底盘数据未初始化
+    CHASSIS_INIT            //车辆底盘数据已初始化
 }chassis_init_e;
 
 typedef enum
 {
-    CALIBRATION_UNINIT = 0,
-    CALIBRATION_INIT,
-    CALIBRATION_NEEDINIT
+    CALIBRATION_UNINIT = 0, //车辆位置未校准
+    CALIBRATION_INIT,       //车辆位置已校准
+    CALIBRATION_NEEDINIT    //车辆位置需要校准（因为两轮因为非运行原因差动）
 }calibration_status_e;
 
 typedef enum
 {
-    CLOSE_START_ZONE,
-    FAR_START_ZONE,
-    CLOSE_BREAK_ZONE,
-    FAR_BREAK_ZONE,
-    MIDDLE_ZONE
+    CLOSE_START_ZONE,  //离出发点近的不可到达区段
+    FAR_START_ZONE,    //离出发点远的不可到达区段
+    CLOSE_BREAK_ZONE,  //离出发点近的刹车区段
+    FAR_BREAK_ZONE,    //离出发点远的刹车区段
+    MIDDLE_ZONE        //中间的正常运行区段
 }vehicle_position_e;
 
 typedef enum
 {
-    MOVE_FAR_DIR,
-    MOVE_CLOSE_DIR
+    MOVE_FAR_DIR,      //车往远离校准点方向运动
+    MOVE_CLOSE_DIR     //车往靠近校准点方向运动
 }vehicle_direction_e;
 
 typedef struct
