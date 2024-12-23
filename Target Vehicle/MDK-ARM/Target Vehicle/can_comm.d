@@ -34,9 +34,9 @@ target vehicle\can_comm.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr
 target vehicle\can_comm.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 target vehicle\can_comm.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 target vehicle\can_comm.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-target vehicle\can_comm.o: ..\app\chassis_task.h
-target vehicle\can_comm.o: ..\comm\can_comm.h
-target vehicle\can_comm.o: ..\bsp\bsp_motor.h
+target vehicle\can_comm.o: ../app/chassis_task.h
+target vehicle\can_comm.o: ../comm/can_comm.h
+target vehicle\can_comm.o: ../bsp/bsp_motor.h
 target vehicle\can_comm.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
@@ -52,6 +52,6 @@ target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/ti
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-target vehicle\can_comm.o: ..\bsp\bsp_can.h
+target vehicle\can_comm.o: ../bsp/bsp_can.h
 target vehicle\can_comm.o: ..\comm\judge_comm.h
 target vehicle\can_comm.o: ..\comm\remote_comm.h

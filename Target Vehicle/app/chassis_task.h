@@ -10,9 +10,9 @@
 
 typedef enum
 {
-    PROTECT_MODE,       //底盘保护模式
-    CTRL_MODE,          //底盘手动控制模式
-    AUTO_MODE           //底盘自动移动模式
+    CHASSIS_PROTECT_MODE,       //底盘保护模式
+    CHASSIS_CTRL_MODE,          //底盘手动控制模式
+    CHASSIS_AUTO_MODE           //底盘自动移动模式
 }chassis_mode_e;
 
 typedef struct
@@ -77,17 +77,21 @@ typedef enum
 
 typedef struct
 {
-    calibration_status_e calibration_status;
-    vehicle_direction_e vehicle_direction;
     float move_speed;
     float wheel_speed[2];
-    chassis_mode_e  chassis_mode;
+    int16_t wheel_current[2];
     chassis_pid_t   chassis_pid;
+    chassis_mode_e  chassis_mode;
     chassis_init_e  chassis_init;
+    vehicle_direction_e vehicle_direction;
     vehicle_position_e vehicle_pos_status;
+    calibration_status_e calibration_status;
+    
 }chassis_t;
 
+void chassis_task(void const *argu);
 
+extern chassis_t chassis;
 extern motor_measure_t right_wheel_motor;
 extern motor_measure_t left_wheel_motor;
 #endif

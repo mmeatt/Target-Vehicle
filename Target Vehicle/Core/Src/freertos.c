@@ -25,6 +25,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32f4xx_hal.h"
+#include "chassis_task.h"
+#include "modeswitch_task.h"
+#include "bsp_motor.h"
+#include "string.h"
+#include "can_comm.h"
 
 /* USER CODE END Includes */
 
@@ -45,7 +51,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+osThreadId chassis_task_t;
+osThreadId gimbal_task_t;
+osThreadId can_comm_task_t;
+osThreadId mode_sw_task_t;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 
@@ -107,6 +116,14 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+    osThreadDef(can_comm_Task,can_comm_task,osPriorityHigh,0,512);
+  can_comm_task_t = osThreadCreate(osThread(can_comm_Task),NULL);
+  
+  osThreadDef(chassisTask,chassis_task,osPriorityAboveNormal,0,512);
+  chassis_task_t = osThreadCreate(osThread(chassisTask),NULL);
+  
+    osThreadDef(modeswTask, mode_switch_task, osPriorityAboveNormal, 0, 128);
+	mode_sw_task_t = osThreadCreate(osThread(modeswTask),NULL);
   /* USER CODE END RTOS_THREADS */
 
 }

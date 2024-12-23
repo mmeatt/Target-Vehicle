@@ -46,3 +46,10 @@ target vehicle\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/ti
 target vehicle\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 target vehicle\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+target vehicle\freertos.o: ../app/chassis_task.h
+target vehicle\freertos.o: ../comm/can_comm.h
+target vehicle\freertos.o: ../Core/Inc/can.h
+target vehicle\freertos.o: ../app/chassis_task.h
+target vehicle\freertos.o: ../bsp/bsp_motor.h
+target vehicle\freertos.o: ../app/modeswitch_task.h
+target vehicle\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

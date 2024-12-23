@@ -26,7 +26,7 @@ typedef enum
 extern motor_current_t motor_cur;
 
 void can_device_init(void);
-void can_msg_send_task(void const *argu); /* can信息发送任务 */
+void can_comm_task(const void* argu);/* can信息发送任务 */
 void can_msg_send_fail_task(void const *argu);
 
 #endif

@@ -16,4 +16,4 @@ target vehicle\modeswitch_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/inc
 target vehicle\modeswitch_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 target vehicle\modeswitch_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\modeswitch_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-target vehicle\modeswitch_task.o: ..\comm\remote_comm.h
+target vehicle\modeswitch_task.o: ../comm/remote_comm.h

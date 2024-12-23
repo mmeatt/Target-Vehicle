@@ -1,7 +1,7 @@
 target vehicle\chassis_task.o: ..\app\chassis_task.c
 target vehicle\chassis_task.o: ..\app\chassis_task.h
 target vehicle\chassis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-target vehicle\chassis_task.o: ..\comm\can_comm.h
+target vehicle\chassis_task.o: ../comm/can_comm.h
 target vehicle\chassis_task.o: ../Core/Inc/can.h
 target vehicle\chassis_task.o: ../Core/Inc/main.h
 target vehicle\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
@@ -35,12 +35,12 @@ target vehicle\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal
 target vehicle\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 target vehicle\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 target vehicle\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-target vehicle\chassis_task.o: ..\app\chassis_task.h
-target vehicle\chassis_task.o: ..\bsp\bsp_motor.h
-target vehicle\chassis_task.o: ..\math\math_calcu.h
-target vehicle\chassis_task.o: ..\math\pid.h
-target vehicle\chassis_task.o: ..\comm\remote_comm.h
-target vehicle\chassis_task.o: ..\bsp\control_def.h
+target vehicle\chassis_task.o: ../app/chassis_task.h
+target vehicle\chassis_task.o: ../bsp/bsp_motor.h
+target vehicle\chassis_task.o: ../math/math_calcu.h
+target vehicle\chassis_task.o: ../math/pid.h
+target vehicle\chassis_task.o: ../comm/remote_comm.h
+target vehicle\chassis_task.o: ../bsp/control_def.h
 target vehicle\chassis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
@@ -56,4 +56,4 @@ target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/includ
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-target vehicle\chassis_task.o: ..\comm\judge_comm.h
+target vehicle\chassis_task.o: ../comm/judge_comm.h

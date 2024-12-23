@@ -5,6 +5,7 @@
 #include "bsp_motor.h"
 #include "judge_comm.h"
 #include "remote_comm.h"
+#include "chassis_task.h"
 
 motor_current_t motor_cur;
 
@@ -25,13 +26,18 @@ void can_device_init(void)
  * @attention
  * @note
  */
-void can_msg_send_task(void const *argu)
+void can_comm_task(const void* argu)
 {
-    osEvent event;
-    memset(&motor_cur, 0, sizeof(motor_current_t));
-    for (;;)
-    {}
+	uint32_t thread_wake_time = osKernelSysTick();
+	for(;;)
+	{
+		taskENTER_CRITICAL();
+		can1_send_message(0x200,chassis.wheel_current[LEFT_WHEEL],chassis.wheel_current[RIGHT_WHEEL],0,0);
+		taskEXIT_CRITICAL();
+		osDelayUntil(&thread_wake_time,1);
+	}
 }
+
 
 static void User_can1_callback(uint32_t ID, uint8_t *CAN_RxData)
 {
