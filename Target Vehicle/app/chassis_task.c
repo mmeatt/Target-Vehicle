@@ -46,8 +46,9 @@ void chassis_task(void const *argu)
         taskENTER_CRITICAL();
         get_vehicle_position();
         chassis_control();
+        chassis_pid_calcu();
         taskEXIT_CRITICAL();
-        osDelayUntil(&mode_wake_time, 2);
+        osDelayUntil(&mode_wake_time, 1);
     }
 }
 
@@ -301,7 +302,9 @@ static void duo_wheel_reinit(void)
 void chassis_pid_calcu(void)
 {
     chassis.chassis_pid.left_spd_ref = chassis.wheel_speed[LEFT_WHEEL];
+    chassis.chassis_pid.left_spd_fdb = left_wheel_motor.speed_rpm;
     chassis.chassis_pid.right_spd_ref = chassis.wheel_speed[RIGHT_WHEEL];
+    chassis.chassis_pid.right_spd_fdb = right_wheel_motor.speed_rpm;
     chassis.wheel_current[LEFT_WHEEL] = (int16_t)pid_calc(&left_wheel_spd,chassis.chassis_pid.left_spd_fdb,chassis.chassis_pid.left_spd_ref);
     chassis.wheel_current[RIGHT_WHEEL] = (int16_t)pid_calc(&right_wheel_spd,chassis.chassis_pid.right_spd_fdb,chassis.chassis_pid.right_spd_ref);
 }

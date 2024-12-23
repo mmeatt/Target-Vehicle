@@ -53,3 +53,4 @@ target vehicle\freertos.o: ../app/chassis_task.h
 target vehicle\freertos.o: ../bsp/bsp_motor.h
 target vehicle\freertos.o: ../app/modeswitch_task.h
 target vehicle\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+target vehicle\freertos.o: ../app/gimbal_task.h

@@ -55,3 +55,5 @@ target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/ev
 target vehicle\can_comm.o: ../bsp/bsp_can.h
 target vehicle\can_comm.o: ..\comm\judge_comm.h
 target vehicle\can_comm.o: ..\comm\remote_comm.h
+target vehicle\can_comm.o: ../app/gimbal_task.h
+target vehicle\can_comm.o: ../app/modeswitch_task.h

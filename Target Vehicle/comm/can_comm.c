@@ -6,6 +6,8 @@
 #include "judge_comm.h"
 #include "remote_comm.h"
 #include "chassis_task.h"
+#include "gimbal_task.h"
+#include "modeswitch_task.h"
 
 motor_current_t motor_cur;
 
@@ -32,7 +34,12 @@ void can_comm_task(const void* argu)
 	for(;;)
 	{
 		taskENTER_CRITICAL();
-		can1_send_message(0x200,chassis.wheel_current[LEFT_WHEEL],chassis.wheel_current[RIGHT_WHEEL],0,0);
+        if(ctrl_mode == PROTECT_MODE)
+        {
+            memset(&chassis.wheel_current,0,2*sizeof(chassis.wheel_current));
+            memset(&gimbal.yaw_current,0,sizeof(gimbal.yaw_current));
+        }
+		can1_send_message(0x200,chassis.wheel_current[LEFT_WHEEL],chassis.wheel_current[RIGHT_WHEEL],gimbal.yaw_current,0);
 		taskEXIT_CRITICAL();
 		osDelayUntil(&thread_wake_time,1);
 	}
@@ -45,21 +52,22 @@ static void User_can1_callback(uint32_t ID, uint8_t *CAN_RxData)
     {
     case LEFT_WHEEL_MOTOR_ID:
     {
-//        motor_yaw.msg_cnt++;
-//        encoder_data_handler(&motor_yaw, CAN_RxData);
-//        wdg_user_set_bit(WDG_BIT_BSP_GIMBAL_YAW);
+        left_wheel_motor.msg_cnt++;
+        encoder_data_handler(&left_wheel_motor, CAN_RxData);
+
         break;
     }
 
     case RIGHT_WHEEL_MOTOR_ID:
     {
-//        Power_data_handler(ID, CAN_RxData);
-//        wdg_user_set_bit(WDG_BIT_BSP_SUPERCAP);
+        right_wheel_motor.msg_cnt++;
+        encoder_data_handler(&right_wheel_motor, CAN_RxData);
         break;
     }
     case CAN_YAW_MOTOR_ID:
     {
-    
+        yaw_motor.msg_cnt++;
+        encoder_data_handler(&yaw_motor, CAN_RxData);
     }
     
     default:

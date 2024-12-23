@@ -31,6 +31,7 @@
 #include "bsp_motor.h"
 #include "string.h"
 #include "can_comm.h"
+#include "gimbal_task.h"
 
 /* USER CODE END Includes */
 
@@ -116,14 +117,17 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-    osThreadDef(can_comm_Task,can_comm_task,osPriorityHigh,0,512);
+  osThreadDef(can_comm_Task,can_comm_task,osPriorityHigh,0,512);
   can_comm_task_t = osThreadCreate(osThread(can_comm_Task),NULL);
   
   osThreadDef(chassisTask,chassis_task,osPriorityAboveNormal,0,512);
   chassis_task_t = osThreadCreate(osThread(chassisTask),NULL);
   
-    osThreadDef(modeswTask, mode_switch_task, osPriorityAboveNormal, 0, 128);
-	mode_sw_task_t = osThreadCreate(osThread(modeswTask),NULL);
+  osThreadDef(gimbalTask,gimbal_task,osPriorityAboveNormal,0,512);
+  gimbal_task_t = osThreadCreate(osThread(gimbalTask),NULL);
+  
+  osThreadDef(modeswTask, mode_switch_task, osPriorityAboveNormal, 0, 128);
+  mode_sw_task_t = osThreadCreate(osThread(modeswTask),NULL);
   /* USER CODE END RTOS_THREADS */
 
 }

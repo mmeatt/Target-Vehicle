@@ -38,6 +38,7 @@
 "target vehicle\port.o"
 "target vehicle\chassis_task.o"
 "target vehicle\modeswitch_task.o"
+"target vehicle\gimbal_task.o"
 "target vehicle\bsp_can.o"
 "target vehicle\bsp_motor.o"
 "target vehicle\pid.o"
