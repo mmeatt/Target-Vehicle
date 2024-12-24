@@ -38,8 +38,8 @@ target vehicle\gimbal_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_
 target vehicle\gimbal_task.o: ../app/chassis_task.h
 target vehicle\gimbal_task.o: ../comm/can_comm.h
 target vehicle\gimbal_task.o: ../bsp/bsp_motor.h
-target vehicle\gimbal_task.o: ../math/math_calcu.h
 target vehicle\gimbal_task.o: ../math/pid.h
+target vehicle\gimbal_task.o: ../math/math_calcu.h
 target vehicle\gimbal_task.o: ../comm/remote_comm.h
 target vehicle\gimbal_task.o: ../bsp/control_def.h
 target vehicle\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

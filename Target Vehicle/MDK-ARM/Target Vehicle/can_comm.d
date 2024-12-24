@@ -37,6 +37,7 @@ target vehicle\can_comm.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uar
 target vehicle\can_comm.o: ../app/chassis_task.h
 target vehicle\can_comm.o: ../comm/can_comm.h
 target vehicle\can_comm.o: ../bsp/bsp_motor.h
+target vehicle\can_comm.o: ../math/pid.h
 target vehicle\can_comm.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 target vehicle\can_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h

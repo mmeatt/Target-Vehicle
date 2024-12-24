@@ -21,7 +21,7 @@ pid_t right_wheel_spd;
 pid_t left_wheel_agl;
 pid_t left_wheel_spd;
 pid_t vehicle_spd;
-pid_t vehicle_agl;
+pid_t vehicle_pos;
 
 /*Ð±ÆÂ±äÁ¿*/
 static ramp_function_source_t chassis_x_ramp;
@@ -61,7 +61,7 @@ static chassis_init_e chassis_param_init(void)
     PID_struct_init(&left_wheel_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
     PID_struct_init(&left_wheel_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
     PID_struct_init(&vehicle_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
-    PID_struct_init(&vehicle_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
+    PID_struct_init(&vehicle_pos, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
     scale.ch3 = RC_CH3_SCALE;
     scale.ch4 = RC_CH4_SCALE;
     if((right_wheel_motor.msg_cnt!=0) && (left_wheel_motor.msg_cnt!=0)) 

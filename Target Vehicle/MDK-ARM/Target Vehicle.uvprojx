@@ -615,6 +615,16 @@
               <FileType>5</FileType>
               <FilePath>..\app\gimbal_task.h</FilePath>
             </File>
+            <File>
+              <FileName>debug_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\debug_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\app\debug_task.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -679,6 +689,16 @@
               <FileName>math_calcu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\math\math_calcu.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_scope.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\math\data_scope.c</FilePath>
+            </File>
+            <File>
+              <FileName>data_scope.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\math\data_scope.h</FilePath>
             </File>
           </Files>
         </Group>

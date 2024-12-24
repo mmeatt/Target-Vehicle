@@ -4,6 +4,7 @@
 #include "stdint.h"
 #include "can_comm.h"
 #include "bsp_motor.h"
+#include "pid.h"
 
 typedef enum
 {
@@ -42,5 +43,7 @@ void gimbal_task(void const *argu);
 void gimbal_pid_calcu(void);
 extern gimbal_t gimbal;
 extern motor_measure_t yaw_motor;
+extern pid_t yaw_agl;
+extern pid_t yaw_spd;
 
 #endif

@@ -4,6 +4,7 @@
 #include "stdint.h"
 #include "can_comm.h"
 #include "bsp_motor.h"
+#include "pid.h"
 
 #define RIGHT_WHEEL 0
 #define LEFT_WHEEL  1 
@@ -94,4 +95,10 @@ void chassis_pid_calcu(void);
 extern chassis_t chassis;
 extern motor_measure_t right_wheel_motor;
 extern motor_measure_t left_wheel_motor;
+extern pid_t right_wheel_agl;
+extern pid_t right_wheel_spd;
+extern pid_t left_wheel_agl;
+extern pid_t left_wheel_spd;
+extern pid_t vehicle_spd;
+extern pid_t vehicle_agl;
 #endif

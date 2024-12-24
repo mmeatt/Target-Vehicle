@@ -32,6 +32,7 @@
 #include "string.h"
 #include "can_comm.h"
 #include "gimbal_task.h"
+#include "debug_task.h"
 
 /* USER CODE END Includes */
 
@@ -56,6 +57,7 @@ osThreadId chassis_task_t;
 osThreadId gimbal_task_t;
 osThreadId can_comm_task_t;
 osThreadId mode_sw_task_t;
+osThreadId debug_task_t;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 
@@ -126,8 +128,11 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(gimbalTask,gimbal_task,osPriorityAboveNormal,0,512);
   gimbal_task_t = osThreadCreate(osThread(gimbalTask),NULL);
   
-  osThreadDef(modeswTask, mode_switch_task, osPriorityAboveNormal, 0, 128);
+  osThreadDef(modeswTask, mode_switch_task, osPriorityNormal, 0, 128);
   mode_sw_task_t = osThreadCreate(osThread(modeswTask),NULL);
+  
+  osThreadDef(debugTask, debug_task, osPriorityNormal, 0, 128);
+  debug_task_t = osThreadCreate(osThread(debugTask),NULL);
   /* USER CODE END RTOS_THREADS */
 
 }
