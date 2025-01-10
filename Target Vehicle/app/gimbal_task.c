@@ -14,10 +14,15 @@ gimbal_t gimbal;
 pid_t yaw_agl;
 pid_t yaw_spd;
 
+float text_spin;
+
+extern TaskHandle_t can_comm_task_t;
+
 static gimbal_init_e gimbal_param_init(void);
 static void gimbal_control(void);
 static void Manual_control(void);
 static void Auto_control(void);
+void gimbal_pid_calcu(void);
 
 void gimbal_task(void const *argu)
 {
@@ -27,7 +32,8 @@ void gimbal_task(void const *argu)
     {
         taskENTER_CRITICAL();
         gimbal_control();
-        gimbal_pid_calcu();
+        osSignalSet(can_comm_task_t, GIMBAL_MOTOR_MSG_SEND);
+        //gimbal_pid_calcu();
         taskEXIT_CRITICAL();
         osDelayUntil(&thread_wake_time, 1);
     }
@@ -37,7 +43,7 @@ void gimbal_task(void const *argu)
 static gimbal_init_e gimbal_param_init(void)
 {
     PID_struct_init(&yaw_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
-    PID_struct_init(&yaw_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
+    PID_struct_init(&yaw_spd, 28000, 10000, 180.0f, 0.3f, 0, 0, 0, 0, Integral_Limit );
     scale.ch1 = RC_CH1_SCALE;
     scale.ch2 = RC_CH2_SCALE;
     if(yaw_motor.msg_cnt!=0) 
@@ -58,67 +64,63 @@ static void gimbal_control(void)
         }
         case GIMBAL_CTRL_MODE:{
             Manual_control();
+            break;
             
         }
         case GIMBAL_AUTO_MODE:{
             Auto_control();
+            break;
 
         }
     }
+    gimbal_pid_calcu();
 }
 
 /*云台控制函数，共三个模式保护手动和自动*/
 static void Manual_control(void)
 {
-    gimbal.spin_speed = rc.ch1 * RC_CH1_SCALE;
+    gimbal.spin_speed = (float)rc.ch1 * RC_CH1_SCALE;
 }
 
 /*云台手动控制函数*/
 static void Auto_control(void)
 {
     float auto_spin_spd;
-    switch(Game_Robot_Status.robot_level)
+    switch(Game_Robot_Status.maximum_HP)
     {
-        case 1:{
+        case 100:{
             auto_spin_spd = SPIN_SPEED_LEVEL1;
             break;
         }
-        case 2:{
+        case 150:{
             auto_spin_spd = SPIN_SPEED_LEVEL2;
             break;
         }
-        case 3:{
+        case 200:{
             auto_spin_spd = SPIN_SPEED_LEVEL3;
             break;
         }
-        case 4:{
+        case 250:{
             auto_spin_spd = SPIN_SPEED_LEVEL4;
             break;
         }
-        case 5:{
+        case 300:{
             auto_spin_spd = SPIN_SPEED_LEVEL5;
             break;
         }
-        case 6:{
+        case 350:{
             auto_spin_spd = SPIN_SPEED_LEVEL6;
             break;
         }
-        case 7:{
+        case 500:{
             auto_spin_spd = SPIN_SPEED_LEVEL7;
             break;
         }
-        case 8:{
+        case 600:{
             auto_spin_spd = SPIN_SPEED_LEVEL8;
             break;
         }   
-        case 9:{
-            auto_spin_spd = SPIN_SPEED_LEVEL9;
-            break;
-        }
-        case 10:{
-            auto_spin_spd = SPIN_SPEED_LEVEL10;
-            break;
-        }
+        
         default:break;
     }
     gimbal.spin_speed = auto_spin_spd;

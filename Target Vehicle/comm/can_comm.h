@@ -16,9 +16,9 @@ typedef struct
 typedef enum
 {
     /* can1 */
-    LEFT_WHEEL_MOTOR_ID = 0x201,
-    RIGHT_WHEEL_MOTOR_ID = 0x202,
-    CAN_YAW_MOTOR_ID = 0x205,
+    LEFT_WHEEL_MOTOR_ID = 0x202,
+    RIGHT_WHEEL_MOTOR_ID = 0x203,
+    CAN_YAW_MOTOR_ID = 0x206,
     /* can2 */
 
 } can_msg_id_e;

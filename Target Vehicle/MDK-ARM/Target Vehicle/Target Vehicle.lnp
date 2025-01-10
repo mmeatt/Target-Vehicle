@@ -3,6 +3,7 @@
 "target vehicle\gpio.o"
 "target vehicle\freertos.o"
 "target vehicle\can.o"
+"target vehicle\dma.o"
 "target vehicle\usart.o"
 "target vehicle\stm32f4xx_it.o"
 "target vehicle\stm32f4xx_hal_msp.o"

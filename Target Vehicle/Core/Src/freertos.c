@@ -121,17 +121,17 @@ void MX_FREERTOS_Init(void) {
   /* add threads, ... */
   osThreadDef(can_comm_Task,can_comm_task,osPriorityHigh,0,512);
   can_comm_task_t = osThreadCreate(osThread(can_comm_Task),NULL);
-  
+//  
   osThreadDef(chassisTask,chassis_task,osPriorityAboveNormal,0,512);
   chassis_task_t = osThreadCreate(osThread(chassisTask),NULL);
   
   osThreadDef(gimbalTask,gimbal_task,osPriorityAboveNormal,0,512);
   gimbal_task_t = osThreadCreate(osThread(gimbalTask),NULL);
   
-  osThreadDef(modeswTask, mode_switch_task, osPriorityNormal, 0, 128);
+  osThreadDef(modeswTask, mode_switch_task, osPriorityAboveNormal, 0, 512);
   mode_sw_task_t = osThreadCreate(osThread(modeswTask),NULL);
   
-  osThreadDef(debugTask, debug_task, osPriorityNormal, 0, 128);
+  osThreadDef(debugTask, debug_task, osPriorityAboveNormal, 0, 512);
   debug_task_t = osThreadCreate(osThread(debugTask),NULL);
   /* USER CODE END RTOS_THREADS */
 

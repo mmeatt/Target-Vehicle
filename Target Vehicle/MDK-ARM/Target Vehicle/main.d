@@ -47,5 +47,12 @@ target vehicle\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.
 target vehicle\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 target vehicle\main.o: ../Core/Inc/can.h
+target vehicle\main.o: ../Core/Inc/dma.h
 target vehicle\main.o: ../Core/Inc/usart.h
 target vehicle\main.o: ../Core/Inc/gpio.h
+target vehicle\main.o: ../comm/usart_comm.h
+target vehicle\main.o: ../comm/can_comm.h
+target vehicle\main.o: ../app/chassis_task.h
+target vehicle\main.o: ../comm/can_comm.h
+target vehicle\main.o: ../bsp/bsp_motor.h
+target vehicle\main.o: ../math/pid.h

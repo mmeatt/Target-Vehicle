@@ -99,8 +99,7 @@ int judge_data_handler(uint8_t *ReadFromUsart)
                     break; 
 
                 case ID_robot_power:      //0x0202
-//                    shoot.barrel.heat = Power_Heat_Data.shooter_id1_17mm_cooling_heat; /* 热量闭环 减小模拟热量计算的误差 */
-//                    memcpy(&Power_Heat_Data, (ReadFromUsart + DATA), LEN_robot_power);
+                    memcpy(&Power_Heat_Data, (ReadFromUsart + DATA), LEN_robot_power);
                     break;
 
                 case ID_robot_position:   //0x0203

@@ -11,7 +11,7 @@
 #define ABS(x) ((x>0)? (x): (-(x)))
 #endif
 
-static uint8_t debug_wave = 1;
+static uint8_t debug_wave = 2;
 
 static void VehicleDataWavePkg(uint8_t wave_index)
 {
@@ -51,7 +51,7 @@ void debug_task(void const *argu)
     for(;;)
     {
         taskENTER_CRITICAL();
-        DataWave(&huart6);
+        DataWave(&huart3);
         taskEXIT_CRITICAL();
         osDelayUntil(&thread_wake_time, 2);
     }

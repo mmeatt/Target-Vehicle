@@ -20,11 +20,14 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "can.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "usart_comm.h"
+#include "can_comm.h"
 
 /* USER CODE END Includes */
 
@@ -90,13 +93,18 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_CAN1_Init();
   MX_CAN2_Init();
   MX_UART5_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+   USER_UART_Init();
+   can_device_init();
+   HAL_Delay(500);
 
   /* USER CODE END 2 */
 

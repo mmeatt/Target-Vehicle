@@ -46,7 +46,7 @@ void chassis_task(void const *argu)
         taskENTER_CRITICAL();
         get_vehicle_position();
         chassis_control();
-        chassis_pid_calcu();
+        //chassis_pid_calcu();
         taskEXIT_CRITICAL();
         osDelayUntil(&mode_wake_time, 1);
     }

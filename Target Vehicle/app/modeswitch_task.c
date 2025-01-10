@@ -1,6 +1,7 @@
 #include "modeswitch_task.h"
 #include "cmsis_os.h"
 #include "remote_comm.h"
+#include "gimbal_task.h"
 
 ctrl_mode_e ctrl_mode;
 uint8_t lock_flag;
@@ -30,12 +31,15 @@ static void sw1_mode_handler(void)
     {
     case RC_UP:
         ctrl_mode = REMOTER_MODE;
+        gimbal.gimbal_mode = GIMBAL_CTRL_MODE;
         break;
     case RC_MI:
         ctrl_mode = PROTECT_MODE;
+        gimbal.gimbal_mode = GIMBAL_PROTECT_MODE;
         break;
     case RC_DN:
         ctrl_mode= AUTO_MODE;
+        gimbal.gimbal_mode = GIMBAL_AUTO_MODE;
         break;
     default:
         break;
