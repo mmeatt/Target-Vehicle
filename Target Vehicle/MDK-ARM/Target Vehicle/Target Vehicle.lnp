@@ -43,6 +43,7 @@
 "target vehicle\debug_task.o"
 "target vehicle\bsp_can.o"
 "target vehicle\bsp_motor.o"
+"target vehicle\bsp_dwt.o"
 "target vehicle\pid.o"
 "target vehicle\crc.o"
 "target vehicle\math_calcu.o"

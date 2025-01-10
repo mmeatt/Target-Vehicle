@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "usart_comm.h"
 #include "can_comm.h"
+#include "bsp_dwt.h"
 
 /* USER CODE END Includes */
 
@@ -104,6 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
    USER_UART_Init();
    can_device_init();
+   DWT_Init(168);
    HAL_Delay(500);
 
   /* USER CODE END 2 */

@@ -8,6 +8,8 @@
 #include "cmsis_os.h"
 #include "judge_comm.h"
 #include "freertos.h"
+#include "bsp_dwt.h"
+#include <math.h>
 
 motor_measure_t yaw_motor;
 gimbal_t gimbal;
@@ -15,10 +17,11 @@ pid_t yaw_agl;
 pid_t yaw_spd;
 
 float text_spin;
-
+float dt;
 extern TaskHandle_t can_comm_task_t;
 
 static gimbal_init_e gimbal_param_init(void);
+static uint32_t dwt_count;
 static void gimbal_control(void);
 static void Manual_control(void);
 static void Auto_control(void);
@@ -31,6 +34,7 @@ void gimbal_task(void const *argu)
     for (;;)
     {
         taskENTER_CRITICAL();
+        dt = DWT_GetDeltaT(&dwt_count);
         gimbal_control();
         osSignalSet(can_comm_task_t, GIMBAL_MOTOR_MSG_SEND);
         //gimbal_pid_calcu();
@@ -43,7 +47,7 @@ void gimbal_task(void const *argu)
 static gimbal_init_e gimbal_param_init(void)
 {
     PID_struct_init(&yaw_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
-    PID_struct_init(&yaw_spd, 28000, 10000, 180.0f, 0.3f, 0, 0, 0, 0, Integral_Limit );
+    PID_struct_init(&yaw_spd, 28000, 10000, 180.0f, 1.0f, 0, 0, 0, 0, Integral_Limit );
     scale.ch1 = RC_CH1_SCALE;
     scale.ch2 = RC_CH2_SCALE;
     if(yaw_motor.msg_cnt!=0) 
@@ -86,44 +90,66 @@ static void Manual_control(void)
 static void Auto_control(void)
 {
     float auto_spin_spd;
-    switch(Game_Robot_Status.maximum_HP)
+    if(rc.sw2 == RC_UP)
     {
-        case 100:{
-            auto_spin_spd = SPIN_SPEED_LEVEL1;
-            break;
+        switch(Game_Robot_Status.shooter_barrel_heat_limit)
+        {
+            case 120:{
+                auto_spin_spd = SPIN_SPEED_LEVEL1;
+                break;
+            }
+            case 180:{
+                auto_spin_spd = SPIN_SPEED_LEVEL2;
+                break;
+            }
+            case 200:{
+                auto_spin_spd = SPIN_SPEED_LEVEL3;
+                break;
+            }
+            case 240:{
+                auto_spin_spd = SPIN_SPEED_LEVEL4;
+                break;
+            }
+            case 300:{
+                auto_spin_spd = SPIN_SPEED_LEVEL5;
+                break;
+            }     
+            default:break;
         }
-        case 150:{
-            auto_spin_spd = SPIN_SPEED_LEVEL2;
-            break;
-        }
-        case 200:{
-            auto_spin_spd = SPIN_SPEED_LEVEL3;
-            break;
-        }
-        case 250:{
-            auto_spin_spd = SPIN_SPEED_LEVEL4;
-            break;
-        }
-        case 300:{
-            auto_spin_spd = SPIN_SPEED_LEVEL5;
-            break;
-        }
-        case 350:{
-            auto_spin_spd = SPIN_SPEED_LEVEL6;
-            break;
-        }
-        case 500:{
-            auto_spin_spd = SPIN_SPEED_LEVEL7;
-            break;
-        }
-        case 600:{
-            auto_spin_spd = SPIN_SPEED_LEVEL8;
-            break;
-        }   
-        
-        default:break;
+        gimbal.spin_speed = auto_spin_spd;
     }
-    gimbal.spin_speed = auto_spin_spd;
+    else if(rc.sw2 == RC_MI)
+    {
+        gimbal.spin_time += dt;
+        switch(Game_Robot_Status.shooter_barrel_heat_limit)
+        {
+            case 120:{
+                gimbal.spin_T = SPIN_T_LEVEL1;
+                break;
+            }
+            case 180:{
+                gimbal.spin_T = SPIN_T_LEVEL2;
+                break;
+            }
+            case 200:{
+                gimbal.spin_T = SPIN_T_LEVEL3;
+                break;
+            }
+            case 240:{
+                gimbal.spin_T = SPIN_T_LEVEL4;
+                break;
+            }
+            case 300:{
+                gimbal.spin_T = SPIN_T_LEVEL5;
+                break;
+            }     
+            default:break;
+        }
+        gimbal.spin_speed = 50 * sin(2 * PI / gimbal.spin_T * gimbal.spin_time) + 100;
+        
+    }
+    
+    
 }
 
 /*云台自动控制函数*/

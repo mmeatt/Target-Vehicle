@@ -710,6 +710,16 @@
               <FileType>5</FileType>
               <FilePath>..\bsp\control_def.h</FilePath>
             </File>
+            <File>
+              <FileName>bsp_dwt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_dwt.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dwt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\bsp\bsp_dwt.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -32,6 +32,8 @@ typedef enum
 
 typedef struct
 {
+    float spin_T;
+    float spin_time;
     float spin_speed;
     int16_t yaw_current;
     gimbal_mode_e gimbal_mode;

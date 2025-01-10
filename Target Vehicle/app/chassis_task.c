@@ -82,11 +82,12 @@ static void chassis_control(void)
         }
         case CHASSIS_CTRL_MODE:{
             Manual_control();
-            
+            break;
         }
         case CHASSIS_AUTO_MODE:{
             Auto_control();
-
+            break;
+            
         }
     }
 }
@@ -281,6 +282,7 @@ static void vehicle_calibration(void)
     {
         chassis.move_speed = 0;
         duo_wheel_reinit();
+        chassis.calibration_status = CALIBRATION_INIT;
     }
     else
     {

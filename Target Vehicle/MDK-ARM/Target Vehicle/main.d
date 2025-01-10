@@ -56,3 +56,4 @@ target vehicle\main.o: ../app/chassis_task.h
 target vehicle\main.o: ../comm/can_comm.h
 target vehicle\main.o: ../bsp/bsp_motor.h
 target vehicle\main.o: ../math/pid.h
+target vehicle\main.o: ../bsp/bsp_dwt.h
