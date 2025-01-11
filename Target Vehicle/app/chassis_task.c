@@ -104,8 +104,8 @@ static void Manual_control(void)
             chassis.move_speed = -MOVE_SPEED_LIMIT;
     }
     
-    chassis.wheel_speed[RIGHT_WHEEL] = chassis.move_speed;
-    chassis.wheel_speed[LEFT_WHEEL] = -chassis.move_speed;
+    chassis.wheel_speed[RIGHT_WHEEL] = chassis.move_speed / 0.06f * 19.0f;
+    chassis.wheel_speed[LEFT_WHEEL] = -chassis.move_speed / 0.06f * 19.0f;
 }
 
 /*底盘自动控制函数*/
@@ -246,6 +246,8 @@ static void Auto_control(void)
     {
         vehicle_calibration();
     }
+    chassis.wheel_speed[RIGHT_WHEEL] = chassis.move_speed / 0.06f * 19.0f;
+    chassis.wheel_speed[LEFT_WHEEL] = -chassis.move_speed / 0.06f * 19.0f;
     
 }
 
@@ -278,7 +280,7 @@ static void get_vehicle_position(void)
 /*车辆位置校准函数，使用一个较低的速度向校准点方向移动，在微动触发后立刻停下*/
 static void vehicle_calibration(void)
 {
-    if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_3) == GPIO_PIN_RESET)
+    if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_10) == GPIO_PIN_RESET)
     {
         chassis.move_speed = 0;
         duo_wheel_reinit();

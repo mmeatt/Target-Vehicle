@@ -32,14 +32,17 @@ static void sw1_mode_handler(void)
     case RC_UP:
         ctrl_mode = REMOTER_MODE;
         gimbal.gimbal_mode = GIMBAL_CTRL_MODE;
+        chassis.chassis_mode = CHASSIS_CTRL_MODE;
         break;
     case RC_MI:
         ctrl_mode = PROTECT_MODE;
         gimbal.gimbal_mode = GIMBAL_PROTECT_MODE;
+        chassis.chassis_mode = CHASSIS_PROTECT_MODE;
         break;
     case RC_DN:
         ctrl_mode= AUTO_MODE;
         gimbal.gimbal_mode = GIMBAL_AUTO_MODE;
+        chassis.chassis_mode = CHASSIS_AUTO_MODE;
         break;
     default:
         break;
