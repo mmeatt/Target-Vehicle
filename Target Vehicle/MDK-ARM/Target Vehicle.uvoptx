@@ -231,12 +231,27 @@
           <WinNumber>1</WinNumber>
           <ItemText>Game_Robot_Status,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>right_wheel_motor</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>left_wheel_motor</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
           <count>0</count>
           <WinNumber>2</WinNumber>
           <ItemText>text_spin</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>left_wheel_motor</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

@@ -16,7 +16,7 @@ static void User_can2_callback(uint32_t ID, uint8_t *CAN_RxData);
 
 void can_device_init(void)
 {
-    uint32_t can_ID1[] = {LEFT_WHEEL_MOTOR_ID, CAN_YAW_MOTOR_ID, CAN_YAW_MOTOR_ID,0xFFF};
+    uint32_t can_ID1[] = {LEFT_WHEEL_MOTOR_ID, RIGHT_WHEEL_MOTOR_ID, CAN_YAW_MOTOR_ID,0xFFF};
     uint32_t can_ID2[] = {0x001, 0x002, 0, 0, 0, 0, 0xFFF};
     canx_init(&hcan1, can_ID1, User_can1_callback);
     canx_init(&hcan2, can_ID2, User_can2_callback);

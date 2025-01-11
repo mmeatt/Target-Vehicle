@@ -17,7 +17,7 @@ typedef enum
 {
     /* can1 */
     LEFT_WHEEL_MOTOR_ID = 0x202,
-    RIGHT_WHEEL_MOTOR_ID = 0x203,
+    RIGHT_WHEEL_MOTOR_ID = 0x201,
     CAN_YAW_MOTOR_ID = 0x206,
     /* can2 */
 
