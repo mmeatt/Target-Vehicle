@@ -57,3 +57,4 @@ target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/includ
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 target vehicle\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 target vehicle\chassis_task.o: ../comm/judge_comm.h
+target vehicle\chassis_task.o: ../bsp/bsp_dwt.h

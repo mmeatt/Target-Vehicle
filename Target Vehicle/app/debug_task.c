@@ -11,7 +11,7 @@
 #define ABS(x) ((x>0)? (x): (-(x)))
 #endif
 
-static uint8_t debug_wave = 2;
+static uint8_t debug_wave = 4;
 
 static void VehicleDataWavePkg(uint8_t wave_index)
 {
@@ -33,6 +33,17 @@ static void VehicleDataWavePkg(uint8_t wave_index)
             break;
         }
         case 3:{
+            DataScope_Get_Channel_Data(chassis.move_speed);
+            DataScope_Get_Channel_Data(chassis_x_ramp.out);
+            DataScope_Get_Channel_Data(chassis.vehicle_direction);
+            break;
+        
+        }
+        case 4:{
+            DataScope_Get_Channel_Data(right_wheel_motor.total_ecd);
+            DataScope_Get_Channel_Data(right_wheel_motor.round_cnt);
+            DataScope_Get_Channel_Data(left_wheel_motor.total_ecd);
+            DataScope_Get_Channel_Data(left_wheel_motor.round_cnt);
             break;
         
         }

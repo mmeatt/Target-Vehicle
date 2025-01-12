@@ -17,7 +17,7 @@ pid_t yaw_agl;
 pid_t yaw_spd;
 
 float text_spin;
-float dt;
+float gimbal_dt;
 extern TaskHandle_t can_comm_task_t;
 
 static gimbal_init_e gimbal_param_init(void);
@@ -34,7 +34,7 @@ void gimbal_task(void const *argu)
     for (;;)
     {
         taskENTER_CRITICAL();
-        dt = DWT_GetDeltaT(&dwt_count);
+        gimbal_dt = DWT_GetDeltaT(&dwt_count);
         gimbal_control();
         osSignalSet(can_comm_task_t, GIMBAL_MOTOR_MSG_SEND);
         //gimbal_pid_calcu();
@@ -120,7 +120,7 @@ static void Auto_control(void)
     }
     else if(rc.sw2 == RC_MI)
     {
-        gimbal.spin_time += dt;
+        gimbal.spin_time += gimbal_dt;
         switch(Game_Robot_Status.shooter_barrel_heat_limit)
         {
             case 120:{

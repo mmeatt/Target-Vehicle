@@ -150,9 +150,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>50</LineNumber>
+          <LineNumber>179</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134238794</Address>
+          <Address>134219596</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -161,14 +161,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\app\chassis_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Target_Vehicle\../app/chassis_task.c\50</Expression>
+          <Expression>\\Target_Vehicle\../app/chassis_task.c\179</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>44</LineNumber>
+          <LineNumber>170</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134238780</Address>
+          <Address>134219538</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -177,7 +177,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\app\chassis_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Target_Vehicle\../app/chassis_task.c\44</Expression>
+          <Expression>\\Target_Vehicle\../app/chassis_task.c\170</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>55</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134239314</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\app\chassis_task.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Target_Vehicle\../app/chassis_task.c\55</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>48</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134239288</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\app\chassis_task.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\Target_Vehicle\../app/chassis_task.c\48</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -189,32 +221,32 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>lock_flag</ItemText>
+          <ItemText>scale</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ctrl_mode</ItemText>
+          <ItemText>gimbal,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>scale</ItemText>
+          <ItemText>yaw_spd,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gimbal,0x0A</ItemText>
+          <ItemText>text_spin</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw_spd,0x0A</ItemText>
+          <ItemText>Game_Robot_Status,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>text_spin</ItemText>
+          <ItemText>Power_Heat_Data,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
@@ -224,32 +256,57 @@
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Power_Heat_Data,0x0A</ItemText>
+          <ItemText>right_wheel_motor,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Game_Robot_Status,0x0A</ItemText>
+          <ItemText>left_wheel_motor,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>right_wheel_motor</ItemText>
+          <ItemText>yaw_motor</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>left_wheel_motor</ItemText>
+          <ItemText>chassis,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw_motor</ItemText>
+          <ItemText>left_wheel_spd</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>chassis,0x0A</ItemText>
+          <ItemText>right_wheel_spd</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Target_Vehicle\../app/chassis_task.c\chassis.chassis_init</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chassis_x_ramp</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>text_speed</ItemText>
+        </Ww>
+        <Ww>
+          <count>17</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chassis_time</ItemText>
+        </Ww>
+        <Ww>
+          <count>18</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Game_Robot_Status,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

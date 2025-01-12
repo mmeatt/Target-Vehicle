@@ -44,7 +44,7 @@ void can_comm_task(const void* argu)
             }
             can1_send_message(0x2FE,gimbal.yaw_current,gimbal.yaw_current,gimbal.yaw_current,gimbal.yaw_current);
             can1_send_message(0x1FE,gimbal.yaw_current,gimbal.yaw_current,gimbal.yaw_current,gimbal.yaw_current);
-            can1_send_message(0x200,0,0,0,0);
+            can1_send_message(0x200,chassis.wheel_current[RIGHT_WHEEL],chassis.wheel_current[LEFT_WHEEL],0,0);
     //        
     //		taskEXIT_CRITICAL();
     //		osDelayUntil(&thread_wake_time,2);

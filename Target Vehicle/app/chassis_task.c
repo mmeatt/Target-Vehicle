@@ -8,6 +8,7 @@
 #include "cmsis_os.h"
 #include "judge_comm.h"
 #include "freertos.h"
+#include "bsp_dwt.h"
 
 #ifndef ABS
 #define ABS(x) ((x>0)? (x): (-(x)))
@@ -22,9 +23,11 @@ pid_t left_wheel_agl;
 pid_t left_wheel_spd;
 pid_t vehicle_spd;
 pid_t vehicle_pos;
+float chassis_dt;
+float chassis_time;
 
 /*斜坡变量*/
-static ramp_function_source_t chassis_x_ramp;
+ramp_function_source_t chassis_x_ramp;
 
 /*底盘函数声明*/
 static chassis_init_e chassis_param_init(void);
@@ -34,7 +37,8 @@ static void Auto_control(void);
 static void vehicle_calibration(void);
 static void get_vehicle_position(void);
 static void vehicle_calibration(void);
-static void duo_wheel_reinit(void);
+static int duo_wheel_reinit(void);
+static uint32_t dwt_count;
 
 /*底盘任务函数*/
 void chassis_task(void const *argu)
@@ -44,6 +48,7 @@ void chassis_task(void const *argu)
     for(;;)
     {
         taskENTER_CRITICAL();
+        chassis_dt = DWT_GetDeltaT(&dwt_count);
         get_vehicle_position();
         chassis_control();
         //chassis_pid_calcu();
@@ -57,9 +62,9 @@ void chassis_task(void const *argu)
 static chassis_init_e chassis_param_init(void)
 {
     PID_struct_init(&right_wheel_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
-    PID_struct_init(&right_wheel_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
+    PID_struct_init(&right_wheel_spd, 10000, 2000, 10, 1, 0, 0, 0, 0, Integral_Limit );
     PID_struct_init(&left_wheel_agl, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
-    PID_struct_init(&left_wheel_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
+    PID_struct_init(&left_wheel_spd, 10000, 2000, 10, 1, 0, 0, 0, 0, Integral_Limit );
     PID_struct_init(&vehicle_spd, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
     PID_struct_init(&vehicle_pos, 0, 0, 0, 0, 0, 0, 0, 0, Integral_Limit );
     scale.ch3 = RC_CH3_SCALE;
@@ -90,6 +95,7 @@ static void chassis_control(void)
             
         }
     }
+    chassis_pid_calcu();
 }
 
 /*底盘手动控制函数*/
@@ -113,9 +119,10 @@ static void Auto_control(void)
 {
     float auto_move_speed;
     uint16_t get_chassis_power;
-    get_chassis_power = Power_Heat_Data.chassis_power;
+    get_chassis_power = Game_Robot_Status.chassis_power_limit;
     if(chassis.calibration_status == CALIBRATION_INIT) 
     {
+        chassis_time += chassis_dt;
         switch(get_chassis_power)//根据裁判系统设定的底盘功率调到对应的底盘数值
         {
             case 50:{
@@ -171,11 +178,12 @@ static void Auto_control(void)
                     ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_START_INPUT,auto_move_speed,0);
                     chassis.move_speed = chassis_x_ramp.out;
                 }
+                break;
             }
             case FAR_BREAK_ZONE:{//在远离校准点的刹车区
                 if(chassis.vehicle_direction == MOVE_FAR_DIR)//如果方向是远离，使用斜坡减速，减速到零后方向反向
                 {
-                    ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_STOP_INPUT,0.0f,auto_move_speed);
+                    ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_STOP_INPUT,auto_move_speed,0.0f);
                     chassis.move_speed = chassis_x_ramp.out;
                     if(chassis.move_speed == 0.0f)
                     {
@@ -184,9 +192,10 @@ static void Auto_control(void)
                 }
                 else//如果方向是靠近，使用斜坡加速
                 {
-                    ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,-auto_move_speed);
+                    ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,auto_move_speed);
                     chassis.move_speed = chassis_x_ramp.out;
                 }
+                break;
             }
             case MIDDLE_ZONE:{//在中间的正常工作区
                 switch(chassis.vehicle_direction)
@@ -201,19 +210,22 @@ static void Auto_control(void)
                         {
                             chassis.move_speed = auto_move_speed;
                         }
+                        break;
                     }
                     case MOVE_CLOSE_DIR:{
                         if(chassis.move_speed > -auto_move_speed)
                         {
-                             ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,-auto_move_speed);
+                             ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,auto_move_speed);
                              chassis.move_speed = chassis_x_ramp.out;
                         }
                         else
                         {
-                            chassis.move_speed = -auto_move_speed;
+                            chassis.move_speed = auto_move_speed;
                         }
+                        break;
                     }
                 }
+                break;
             }
             case CLOSE_START_ZONE:{//在靠近校准点的不可到达区
                 if(chassis.vehicle_direction == MOVE_CLOSE_DIR)
@@ -226,6 +238,7 @@ static void Auto_control(void)
                     ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_START_INPUT,auto_move_speed,0);
                     chassis.move_speed = chassis_x_ramp.out;
                 }
+                break;
             }
             case FAR_START_ZONE:{//在远离校准点的不可到达区
                 if(chassis.vehicle_direction == MOVE_FAR_DIR)
@@ -235,11 +248,24 @@ static void Auto_control(void)
                 }
                 else if(chassis.vehicle_direction == MOVE_CLOSE_DIR)
                 {
-                    ramp_calc(&chassis_x_ramp,2.0f,VEHICLE_START_INPUT,auto_move_speed,0);
+                    float speed1 = -auto_move_speed;
+                    ramp_calc(&chassis_x_ramp,2.0f,-VEHICLE_START_INPUT,0.0f,auto_move_speed);
                     chassis.move_speed = chassis_x_ramp.out;
                 }
+                break;
             }
             default:break;
+        }
+        if(chassis_time >5)
+        {
+            if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_10) == GPIO_PIN_RESET)
+            {
+                if(duo_wheel_reinit())
+                {
+                    chassis.vehicle_direction = MOVE_FAR_DIR;
+                }
+               
+            }
         }
     }
     else
@@ -256,20 +282,22 @@ static void get_vehicle_position(void)
 {
     if((right_wheel_motor.total_ecd < HIT_PROTECT_DISTANCE_CLOSE) && (ABS(left_wheel_motor.total_ecd) < HIT_PROTECT_DISTANCE_CLOSE))
     {
-        chassis.vehicle_pos_status = CLOSE_BREAK_ZONE;
+        chassis.vehicle_pos_status = CLOSE_START_ZONE;
     }
-    else if((right_wheel_motor.total_ecd > HIT_PROTECT_DISTANCE_FAR) && (ABS(left_wheel_motor.total_ecd) > HIT_PROTECT_DISTANCE_FAR))
+    else if(((right_wheel_motor.total_ecd > MOVE_LIMIT_FAR) && (right_wheel_motor.total_ecd < HIT_PROTECT_DISTANCE_FAR)) &&
+        ((ABS(left_wheel_motor.total_ecd) > MOVE_LIMIT_FAR) && (ABS(left_wheel_motor.total_ecd) < HIT_PROTECT_DISTANCE_FAR)))
     {
         chassis.vehicle_pos_status = FAR_BREAK_ZONE;
     }
-    else if((right_wheel_motor.total_ecd > HIT_PROTECT_DISTANCE_CLOSE) && (right_wheel_motor.total_ecd < HIT_PROTECT_DISTANCE_FAR) &&
-        (ABS(left_wheel_motor.total_ecd) > HIT_PROTECT_DISTANCE_CLOSE) && (ABS(left_wheel_motor.total_ecd) < HIT_PROTECT_DISTANCE_FAR))
+    else if((right_wheel_motor.total_ecd > MOVE_LIMIT_CLOSE) && (right_wheel_motor.total_ecd < MOVE_LIMIT_FAR) &&
+        (ABS(left_wheel_motor.total_ecd) > MOVE_LIMIT_CLOSE) && (ABS(left_wheel_motor.total_ecd) < MOVE_LIMIT_FAR))
     {
         chassis.vehicle_pos_status = MIDDLE_ZONE;
     }
-    else if((right_wheel_motor.total_ecd < HIT_PROTECT_DISTANCE_CLOSE) && (ABS(left_wheel_motor.total_ecd) < HIT_PROTECT_DISTANCE_CLOSE))
+    else if(((right_wheel_motor.total_ecd < MOVE_LIMIT_CLOSE) && (right_wheel_motor.total_ecd > HIT_PROTECT_DISTANCE_CLOSE)) &&
+        ((ABS(left_wheel_motor.total_ecd) < MOVE_LIMIT_CLOSE) && (ABS(left_wheel_motor.total_ecd) > HIT_PROTECT_DISTANCE_CLOSE)))
     {
-        chassis.vehicle_pos_status = CLOSE_START_ZONE;
+        chassis.vehicle_pos_status = CLOSE_BREAK_ZONE;
     }
     else if((right_wheel_motor.total_ecd > HIT_PROTECT_DISTANCE_FAR) && (ABS(left_wheel_motor.total_ecd) > HIT_PROTECT_DISTANCE_FAR))
     {
@@ -283,8 +311,12 @@ static void vehicle_calibration(void)
     if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_10) == GPIO_PIN_RESET)
     {
         chassis.move_speed = 0;
-        duo_wheel_reinit();
-        chassis.calibration_status = CALIBRATION_INIT;
+        if(duo_wheel_reinit())
+        {
+             chassis.calibration_status = CALIBRATION_INIT;
+            chassis.vehicle_direction = MOVE_FAR_DIR;
+        }
+       
     }
     else
     {
@@ -294,12 +326,15 @@ static void vehicle_calibration(void)
 }
 
 /*底盘电机数据复校准函数*/
-static void duo_wheel_reinit(void)
+static int duo_wheel_reinit(void)
 {
     memset(&right_wheel_motor.ecd,0,sizeof(right_wheel_motor.ecd));
     memset(&right_wheel_motor.total_ecd,0,sizeof(right_wheel_motor.total_ecd));
+    memset(&right_wheel_motor.round_cnt,0,sizeof(right_wheel_motor.round_cnt));
     memset(&left_wheel_motor.ecd,0,sizeof(right_wheel_motor.ecd));
     memset(&left_wheel_motor.total_ecd,0,sizeof(right_wheel_motor.total_ecd));
+    memset(&left_wheel_motor.round_cnt,0,sizeof(right_wheel_motor.round_cnt));
+    return 1;
 }
 
 

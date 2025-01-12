@@ -57,4 +57,5 @@ target vehicle\debug_task.o: ../app/chassis_task.h
 target vehicle\debug_task.o: ../comm/can_comm.h
 target vehicle\debug_task.o: ../bsp/bsp_motor.h
 target vehicle\debug_task.o: ../math/pid.h
+target vehicle\debug_task.o: ../math/math_calcu.h
 target vehicle\debug_task.o: ..\app\modeswitch_task.h

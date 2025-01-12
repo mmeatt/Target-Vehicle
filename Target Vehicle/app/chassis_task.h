@@ -5,6 +5,7 @@
 #include "can_comm.h"
 #include "bsp_motor.h"
 #include "pid.h"
+#include "math_calcu.h"
 
 #define RIGHT_WHEEL 0
 #define LEFT_WHEEL  1 
@@ -78,6 +79,7 @@ typedef enum
 
 typedef struct
 {
+    float move_time;
     float move_speed;
     float wheel_speed[2];
     int16_t wheel_current[2];
@@ -93,6 +95,7 @@ typedef struct
 void chassis_task(void const *argu);
 void chassis_pid_calcu(void);
 extern chassis_t chassis;
+extern ramp_function_source_t chassis_x_ramp;
 extern motor_measure_t right_wheel_motor;
 extern motor_measure_t left_wheel_motor;
 extern pid_t right_wheel_agl;
