@@ -84,7 +84,7 @@ static void gimbal_control(void)
 /*云台控制函数，共三个模式保护手动和自动*/
 static void Manual_control(void)
 {
-    gimbal.spin_speed = (float)rc.ch1 * RC_CH1_SCALE + SBUS.Ch2 * RC_CH1_SCALE;
+    gimbal.spin_speed = (float)rc.ch1 * RC_CH1_SCALE + SBUS.Ch1 * RC_CH1_SCALE;
 }
 
 /*云台手动控制函数*/

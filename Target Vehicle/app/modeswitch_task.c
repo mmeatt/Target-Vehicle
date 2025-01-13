@@ -80,7 +80,7 @@ static void unlock_init(void)
             lock_flag = 1; // ×ó¿ØÖÆ¸Ë²¦ÖÁÓÒÏÂ
         }
     }
-    else if(SBUS.sw3 == RC_MI && SBUS.sw2 == RC_UP)
+    else if(SBUS.sw3 == SBUS_MI && SBUS.sw2 == SBUS_UP)
     {
         if (SBUS.Ch4 > 660 && SBUS.Ch2 < -660)
         {
