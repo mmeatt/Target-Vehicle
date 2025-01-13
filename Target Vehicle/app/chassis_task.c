@@ -9,6 +9,7 @@
 #include "judge_comm.h"
 #include "freertos.h"
 #include "bsp_dwt.h"
+#include "wfly_comm.h"
 
 #ifndef ABS
 #define ABS(x) ((x>0)? (x): (-(x)))
@@ -101,7 +102,7 @@ static void chassis_control(void)
 /*底盘手动控制函数*/
 static void Manual_control(void)
 {
-    chassis.move_speed = rc.ch3 * RC_CH3_SCALE;
+    chassis.move_speed = rc.ch3 * RC_CH3_SCALE + SBUS.Ch4 * RC_CH3_SCALE;
     if(ABS(chassis.move_speed) > MOVE_SPEED_LIMIT)
     {
         if(chassis.move_speed > 0)

@@ -56,3 +56,4 @@ target vehicle\modeswitch_task.o: ../comm/can_comm.h
 target vehicle\modeswitch_task.o: ../bsp/bsp_motor.h
 target vehicle\modeswitch_task.o: ../math/pid.h
 target vehicle\modeswitch_task.o: ../math/math_calcu.h
+target vehicle\modeswitch_task.o: ../comm/wfly_comm.h

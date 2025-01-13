@@ -10,6 +10,7 @@
 #include "freertos.h"
 #include "bsp_dwt.h"
 #include <math.h>
+#include "wfly_comm.h"
 
 motor_measure_t yaw_motor;
 gimbal_t gimbal;
@@ -83,7 +84,7 @@ static void gimbal_control(void)
 /*云台控制函数，共三个模式保护手动和自动*/
 static void Manual_control(void)
 {
-    gimbal.spin_speed = (float)rc.ch1 * RC_CH1_SCALE;
+    gimbal.spin_speed = (float)rc.ch1 * RC_CH1_SCALE + SBUS.Ch2 * RC_CH1_SCALE;
 }
 
 /*云台手动控制函数*/
@@ -119,6 +120,64 @@ static void Auto_control(void)
         gimbal.spin_speed = auto_spin_spd;
     }
     else if(rc.sw2 == RC_MI)
+    {
+        gimbal.spin_time += gimbal_dt;
+        switch(Game_Robot_Status.shooter_barrel_heat_limit)
+        {
+            case 120:{
+                gimbal.spin_T = SPIN_T_LEVEL1;
+                break;
+            }
+            case 180:{
+                gimbal.spin_T = SPIN_T_LEVEL2;
+                break;
+            }
+            case 200:{
+                gimbal.spin_T = SPIN_T_LEVEL3;
+                break;
+            }
+            case 240:{
+                gimbal.spin_T = SPIN_T_LEVEL4;
+                break;
+            }
+            case 300:{
+                gimbal.spin_T = SPIN_T_LEVEL5;
+                break;
+            }     
+            default:break;
+        }
+        gimbal.spin_speed = 50 * sin(2 * PI / gimbal.spin_T * gimbal.spin_time) + 100;
+        
+    }
+    if(SBUS.sw2 == SBUS_UP)
+    {
+        switch(Game_Robot_Status.shooter_barrel_heat_limit)
+        {
+            case 120:{
+                auto_spin_spd = SPIN_SPEED_LEVEL1;
+                break;
+            }
+            case 180:{
+                auto_spin_spd = SPIN_SPEED_LEVEL2;
+                break;
+            }
+            case 200:{
+                auto_spin_spd = SPIN_SPEED_LEVEL3;
+                break;
+            }
+            case 240:{
+                auto_spin_spd = SPIN_SPEED_LEVEL4;
+                break;
+            }
+            case 300:{
+                auto_spin_spd = SPIN_SPEED_LEVEL5;
+                break;
+            }     
+            default:break;
+        }
+        gimbal.spin_speed = auto_spin_spd;
+    }
+    else if(SBUS.sw2 == SBUS_MI)
     {
         gimbal.spin_time += gimbal_dt;
         switch(Game_Robot_Status.shooter_barrel_heat_limit)

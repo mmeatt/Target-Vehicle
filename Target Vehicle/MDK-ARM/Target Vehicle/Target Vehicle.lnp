@@ -52,6 +52,7 @@
 "target vehicle\usart_comm.o"
 "target vehicle\judge_comm.o"
 "target vehicle\remote_comm.o"
+"target vehicle\wfly_comm.o"
 --strict --scatter "Target Vehicle\Target Vehicle.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

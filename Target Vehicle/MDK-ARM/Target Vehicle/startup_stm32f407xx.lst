@@ -881,10 +881,10 @@ ARM Macro Assembler    Page 14
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend="target vehicle\startup_stm32f407xx.d" -o"target vehicle\startu
 p_stm32f407xx.o" -I../Core/Inc -I.\RTE\_Target_Vehicle -IC:\Keil_v5\ARM\PACK\AR
-M\CMSIS\5.0.1\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Dri
-vers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISION_VERSION SETA 524"
- --predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=./target ve
-hicle/\startup_stm32f407xx.lst startup_stm32f407xx.s
+M\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.
+1\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefine="__UVISION_VERSION SETA
+ 524" --predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=./targ
+et vehicle/\startup_stm32f407xx.lst startup_stm32f407xx.s
 
 
 

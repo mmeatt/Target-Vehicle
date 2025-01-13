@@ -60,3 +60,4 @@ target vehicle\gimbal_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include
 target vehicle\gimbal_task.o: ../comm/judge_comm.h
 target vehicle\gimbal_task.o: ../bsp/bsp_dwt.h
 target vehicle\gimbal_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+target vehicle\gimbal_task.o: ../comm/wfly_comm.h

@@ -52,3 +52,4 @@ target vehicle\usart_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/
 target vehicle\usart_comm.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 target vehicle\usart_comm.o: ../math/math_calcu.h
 target vehicle\usart_comm.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+target vehicle\usart_comm.o: ..\comm\wfly_comm.h

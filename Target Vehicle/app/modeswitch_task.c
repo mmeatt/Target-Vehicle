@@ -2,6 +2,7 @@
 #include "cmsis_os.h"
 #include "remote_comm.h"
 #include "gimbal_task.h"
+#include "wfly_comm.h"
 
 ctrl_mode_e ctrl_mode;
 uint8_t lock_flag;
@@ -47,6 +48,26 @@ static void sw1_mode_handler(void)
     default:
         break;
     }
+    switch (SBUS.sw3)
+    {
+    case SBUS_UP:
+        ctrl_mode = REMOTER_MODE;
+        gimbal.gimbal_mode = GIMBAL_CTRL_MODE;
+        chassis.chassis_mode = CHASSIS_CTRL_MODE;
+        break;
+    case SBUS_MI:
+        ctrl_mode = PROTECT_MODE;
+        gimbal.gimbal_mode = GIMBAL_PROTECT_MODE;
+        chassis.chassis_mode = CHASSIS_PROTECT_MODE;
+        break;
+    case SBUS_DN:
+        ctrl_mode= AUTO_MODE;
+        gimbal.gimbal_mode = GIMBAL_AUTO_MODE;
+        chassis.chassis_mode = CHASSIS_AUTO_MODE;
+        break;
+    default:
+        break;
+    }
 }
 
 /* Ω‚À¯∫Ø ˝ */
@@ -55,6 +76,13 @@ static void unlock_init(void)
     if (rc.sw1 == RC_MI && rc.sw2 == RC_UP)
     { // ◊Û≤¶∏Àæ”÷–£¨”“≤¶∏À÷√…œ
         if (rc.ch4 < -600 && rc.ch3 > 600)
+        {
+            lock_flag = 1; // ◊Ûøÿ÷∆∏À≤¶÷¡”“œ¬
+        }
+    }
+    else if(SBUS.sw3 == RC_MI && SBUS.sw2 == RC_UP)
+    {
+        if (SBUS.Ch4 > 660 && SBUS.Ch2 < -660)
         {
             lock_flag = 1; // ◊Ûøÿ÷∆∏À≤¶÷¡”“œ¬
         }

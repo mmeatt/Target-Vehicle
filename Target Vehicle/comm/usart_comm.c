@@ -5,17 +5,22 @@
 #include "math_calcu.h"
 #include "string.h"
 #include "usart.h"
+#include "wfly_comm.h"
 
 uint8_t	dma_judge_buf[DMA_JUDGE_LEN];
 uint8_t dma_dbus_buf[DMA_DBUS_LEN];
+uint8_t dma_sbus_buf[25];
 
 void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART1) //DBUS´®¿Ú
     {
-        rc_callback_handler(&rc,dma_dbus_buf);
-        memset(dma_dbus_buf, 0, DMA_DBUS_LEN);
-        HAL_UART_Receive_DMA(huart, dma_dbus_buf, DMA_DBUS_LEN);
+//        rc_callback_handler(&rc,dma_dbus_buf);
+//        memset(dma_dbus_buf, 0, DMA_DBUS_LEN);
+//        HAL_UART_Receive_DMA(huart, dma_dbus_buf, DMA_DBUS_LEN);
+        sbus_callback_handler(&SBUS,dma_sbus_buf);
+        memset(dma_sbus_buf, 0, 25);
+        HAL_UART_Receive_DMA(huart, dma_sbus_buf, 25);
     }
     else if (huart->Instance == USART2)	//JUDGE´®¿Ú
     {
