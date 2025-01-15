@@ -268,6 +268,10 @@ static void Auto_control(void)
                
             }
         }
+        if(SBUS.sw1 == SBUS_MI)
+        {
+            chassis.calibration_status = CALIBRATION_UNINIT;
+        }
     }
     else
     {
